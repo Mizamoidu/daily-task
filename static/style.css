@@ -1,0 +1,115 @@
+
+body {
+  background-color: #f4f6f9;
+  padding-bottom: 60px;
+}
+
+h1 {
+  margin-top: 30px;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+/* Form + Table containers */
+.task-form,
+.task-table-container {
+  width: 50%;
+  max-width: 700px;
+  min-width: 300px;
+  margin: 0 auto 40px auto;
+}
+
+/* Form stays the same size */
+.task-form form {
+  display: flex;
+  gap: 10px;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.task-form input[type="text"] {
+  flex: 1;
+}
+
+/* Pointer alert */
+.pointer-alert {
+  position: relative;
+  background-color: #fff3cd;
+  border: 1px solid #ffeeba;
+  padding: 8px 12px;
+  border-radius: 4px;
+  margin-top: 6px;
+  font-size: 0.9rem;
+}
+
+.pointer-alert:before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: 20px;
+  border-width: 0 8px 8px 8px;
+  border-style: solid;
+  border-color: transparent transparent #ffeeba transparent;
+}
+
+.pointer-alert:after {
+  content: "";
+  position: absolute;
+  top: -7px;
+  left: 21px;
+  border-width: 0 7px 7px 7px;
+  border-style: solid;
+  border-color: transparent transparent #fff3cd transparent;
+}
+
+/* Table styling */
+.task-table-container {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+table { width: 100%; }
+
+th, td { vertical-align: middle !important; }
+
+td.actions {
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* Completed strike & badge */
+.completed {
+  text-decoration: line-through;
+  color: gray;
+  opacity: 0.6;
+  background-color: #f8f9fa;
+  padding: 2px 6px;
+  border-radius: 5px;
+}
+
+.completed-badge {
+  background-color: #ca1016;
+  color: white;
+  padding: 2px 6px;
+  font-size: 0.75rem;
+  border-radius: 12px;
+  margin-left: 5px;
+}
+/* Checkbox styling */
+.form-check-input {
+  width: 1.3em;
+  height: 1.3em;
+  cursor: pointer;
+  border: 1px solid black;
+}
+
+.task-label { cursor: pointer; margin-left: 5px; }
+
+@media (max-width: 768px) {
+  .task-form, .task-table-container { width: 90%; }
+  .task-form form { flex-wrap: wrap; }
+  .task-form button { width: 100%; }
+  td.actions { text-align: left; }
+}

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Daily Task Tracker</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<h1 class="text-center">Daily Task Tracker</h1>
+
+<!-- Add/Edit Form -->
+<div class="task-form">
+
+  <form action="/" method="POST">
+    <input type="hidden" name="sno" value="{{ todo_to_edit.sno if todo_to_edit else '' }}">
+    <input 
+      type="text"
+      class="form-control"
+      name="task"
+      placeholder="Enter a task"
+      value="{{ todo_to_edit.title if todo_to_edit else '' }}"
+      required
+    >
+    <button type="submit" class="btn btn-dark mt-2">
+      {{ 'Update Task' if todo_to_edit else 'Add Task' }}
+    </button>
+  </form>
+
+  {% if todo_to_edit %}
+  <div class="pointer-alert mt-2">
+    You are editing this task. Update and click <strong>Update Task</strong>.
+  </div>
+  {% endif %}
+
+</div>
+
+<!-- Todo List -->
+<div class="task-table-container mt-4">
+  <h3 class="mb-3">Todo List</h3>
+
+  {% if allTodo|length == 0 %}
+    <p class="text-center">No tasks added yet.</p>
+  {% else %}
+
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Sl.No</th>
+        <th>Task</th>
+        <th class="text-end">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for todo in allTodo %}
+      <tr>
+        <th>{{ loop.index }}</th>
+
+        <!-- Checkbox + Completed Badge -->
+        <td>
+          <form action="/complete/{{ todo.sno }}" method="POST">
+            <div class="form-check d-flex align-items-center">
+              <input 
+                type="checkbox" 
+                class="form-check-input me-2"
+                id="task{{ todo.sno }}"
+                name="completed"
+                onchange="this.form.submit()"
+                {% if todo.completed %} checked {% endif %}
+              >
+              <label class="form-check-label {% if todo.completed %}completed{% endif %}" for="task{{ todo.sno }}">
+                {{ todo.title }}
+                {% if todo.completed %}
+                  <span class="completed-badge">Completed</span>
+                {% endif %}
+              </label>
+            </div>
+          </form>
+        </td>
+
+        <!-- Actions column -->
+        <td class="actions text-end">
+          {% if not todo.completed %}
+            <a href="/?edit_id={{ todo.sno }}" class="btn btn-dark btn-sm">EDIT</a>
+          {% endif %}
+          <a href="/delete/{{ todo.sno }}" class="btn btn-danger btn-sm">DELETE</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% endif %}
+</div>
+
+</body>
+</html>
